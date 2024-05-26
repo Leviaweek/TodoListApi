@@ -4,6 +4,7 @@ using TodoList.Database;
 using TodoList.Handlers;
 using TodoList.Mediators;
 using TodoList.Models.Commands;
+using TodoList.Models.Dtos;
 using TodoList.Models.Queries;
 using TodoList.Models.Responses;
 
@@ -29,7 +30,7 @@ builder.Services.AddTransient<IQueryHandler<GetAllTodoQuery, GetAllTodoQueryResp
 builder.Services.AddTransient<IQueryHandler<GetTodoQuery, GetTodoQueryResponse>, GetTodoQueryHandler>();
 builder.Services.AddTransient<ICommandHandler<AddTodoCommand, AddTodoCommandResponse>, AddTodoCommandHandler>();
 builder.Services.AddTransient<ICommandHandler<UpdateTodoCommand, UpdateTodoCommandResponse>, UpdateTodoCommandHandler>();
-
+builder.Services.AddTransient<ICommandHandler<DeleteTodoCommand, DeleteTodoCommandResponse>, DeleteTodoCommandHandler>();
 
 var app = builder.Build();
 

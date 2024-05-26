@@ -24,7 +24,8 @@ public sealed class AddTodoCommandHandler(
             IsCompleted = false,
             Description = command.Description,
             Title = command.Title,
-            UserId = user.Id
+            UserId = user.Id,
+            IsDeleted = false
         };
         await db.Todos.AddAsync(todo, cancellationToken);
         await db.SaveChangesAsync(cancellationToken);

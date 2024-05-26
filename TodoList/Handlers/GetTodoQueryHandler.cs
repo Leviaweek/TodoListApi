@@ -14,7 +14,8 @@ public sealed class GetTodoQueryHandler(
         await using var db = await dbContextFactory.CreateDbContextAsync(cancellationToken);
         var todo = await db.Todos.FirstOrDefaultAsync(x => 
                 x.UserId == query.UserId &&
-                x.Id == query.TodoId,
+                x.Id == query.TodoId &&
+                !x.IsDeleted,
             cancellationToken);
         return new GetTodoQueryResponse(todo?.ToDto());
     }

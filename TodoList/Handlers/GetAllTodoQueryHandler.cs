@@ -13,7 +13,7 @@ public sealed class GetAllTodoQueryHandler(
         CancellationToken cancellationToken = default)
     {
         await using var db = await dbContextFactory.CreateDbContextAsync(cancellationToken);
-        var todos = db.Todos.Where(x => x.UserId == query.UserId);
+        var todos = db.Todos.Where(x => x.UserId == query.UserId && !x.IsDeleted);
         return new GetAllTodoQueryResponse(await todos.Select(x => x.ToDto())
             .ToListAsync(cancellationToken: cancellationToken));
     }

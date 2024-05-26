@@ -15,7 +15,8 @@ public sealed class UpdateTodoCommandHandler(
         await using var db = await dbContextFactory.CreateDbContextAsync(cancellationToken);
         var todo = await db.Todos.FirstOrDefaultAsync(
             x => x.UserId == command.UserId &&
-                 x.Id ==  command.TodoId, cancellationToken);
+                 x.Id == command.TodoId &&
+                 !x.IsDeleted, cancellationToken);
         if (todo is null)
             return new UpdateTodoCommandResponse();
         todo.ExecutionDate = command.ExecutionDate;

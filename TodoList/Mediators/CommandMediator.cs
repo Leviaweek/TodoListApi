@@ -7,7 +7,8 @@ namespace TodoList.Mediators;
 
 public sealed class CommandMediator(
     ICommandHandler<AddTodoCommand, AddTodoCommandResponse> addTodoCommandHandler,
-    ICommandHandler<UpdateTodoCommand, UpdateTodoCommandResponse> updateTodoCommandHandler) : ICommandMediator
+    ICommandHandler<UpdateTodoCommand, UpdateTodoCommandResponse> updateTodoCommandHandler,
+    ICommandHandler<DeleteTodoCommand, DeleteTodoCommandResponse> deleteTodoCommandHandler) : ICommandMediator
 {
     public async ValueTask<TResponse> HandleAsync<TResponse>(ICommand<TResponse> command, CancellationToken cancellationToken)
         where TResponse: class, IResponse
@@ -22,6 +23,11 @@ public sealed class CommandMediator(
             case UpdateTodoCommand updateTodoCommand:
             {
                 var response = await updateTodoCommandHandler.HandleAsync(updateTodoCommand, cancellationToken);
+                return Unsafe.As<TResponse>(response);
+            }
+            case DeleteTodoCommand deleteTodoCommand:
+            {
+                var response = await deleteTodoCommandHandler.HandleAsync(deleteTodoCommand, cancellationToken);
                 return Unsafe.As<TResponse>(response);
             }
             default:

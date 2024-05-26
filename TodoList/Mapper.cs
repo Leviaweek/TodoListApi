@@ -26,6 +26,9 @@ public static class Mapper
 
     public static UpdateTodoCommandResponseDto ToDto(this UpdateTodoCommandResponse response) =>
         new(response.Todo ?? throw new InvalidOperationException());
+
+    public static DeleteTodoCommandResponseDto ToDto(this DeleteTodoCommandResponse command) =>
+        new DeleteTodoCommandResponseDto(command.IsDeleted);
     public static AddTodoCommand ToCommand(this AddTodoCommandDto dto, Guid userId) => new(userId,
         Title: dto.Title,
         Description: dto.Description,
@@ -38,4 +41,6 @@ public static class Mapper
         Description: dto.Description,
         ExecutionDate: dto.ExecutionTime,
         IsCompleted: dto.IsCompleted);
+
+    public static DeleteTodoCommand ToCommand(this DeleteTodoCommandDto dto, Guid userId) => new(userId, dto.TodoId);
 }
