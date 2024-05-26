@@ -32,7 +32,7 @@ public sealed class TodoListController(ICommandMediator commandMediator, IQueryM
         return TypedResults.Ok(response.ToDto());
     }
 
-    [HttpPost("add")]
+    [HttpPost]
     public async ValueTask<Results<Ok<AddTodoCommandResponseDto>, NotFound>> AddTodoAsync([FromQuery] Guid userId,
         [FromBody] AddTodoCommandDto dto,
         CancellationToken cancellationToken = default)
@@ -43,7 +43,7 @@ public sealed class TodoListController(ICommandMediator commandMediator, IQueryM
         return response.Todo is null ? TypedResults.NotFound() : TypedResults.Ok(response.ToDto());
     }
 
-    [HttpPost("update")]
+    [HttpPut]
     public async ValueTask<Results<Ok<UpdateTodoCommandResponseDto>, NotFound>> UpdateTodoAsync([FromQuery] Guid userId,
         [FromBody] UpdateTodoCommandDto dto,
         CancellationToken cancellationToken = default)
