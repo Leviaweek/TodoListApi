@@ -7,7 +7,7 @@ using TodoList.Models.Queries;
 namespace TodoList.Controllers;
 
 [ApiController]
-[Route("/api/todo")]
+[Route("/api/todos")]
 public sealed class TodoListController(ICommandMediator commandMediator, IQueryMediator queryMediator) : ControllerBase
 {
     [HttpGet("{id:guid}")]
