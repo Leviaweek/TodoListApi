@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using TodoList.Abstractions;
+using TodoList.Models.Commands;
 using TodoList.Models.Dtos;
 using TodoList.Models.Queries;
 
@@ -43,24 +44,24 @@ public sealed class TodoListController(ICommandMediator commandMediator, IQueryM
         return response.Todo is null ? TypedResults.NotFound() : TypedResults.Ok(response.ToDto());
     }
 
-    [HttpPut]
+    [HttpPut("{id:guid}")]
     public async ValueTask<Results<Ok<UpdateTodoCommandResponseDto>, NotFound>> UpdateTodoAsync([FromQuery] Guid userId,
-        [FromBody] UpdateTodoCommandDto dto,
+        [FromBody] TodoDto dto,
         CancellationToken cancellationToken = default)
     {
-        if (userId == Guid.Empty || dto.TodoId == Guid.Empty) return TypedResults.NotFound();
-        var command = dto.ToCommand(userId);
+        if (userId == Guid.Empty || dto.Id == Guid.Empty) return TypedResults.NotFound();
+        var command = new UpdateTodoCommand(userId, dto);
         var response = await commandMediator.HandleAsync(command, cancellationToken);
         return response.Todo is null ? TypedResults.NotFound() : TypedResults.Ok(response.ToDto());
     }
 
-    [HttpDelete]
+    [HttpDelete("{id:guid}")]
     public async ValueTask<Results<Ok<DeleteTodoCommandResponseDto>, NotFound>> DeleteTodoAsync([FromQuery] Guid userId,
-        [FromBody] DeleteTodoCommandDto dto,
+        Guid id,
         CancellationToken cancellationToken = default)
     {
-        if (userId == Guid.Empty || dto.TodoId == Guid.Empty) return TypedResults.NotFound();
-        var command = dto.ToCommand(userId);
+        if (userId == Guid.Empty || id == Guid.Empty) return TypedResults.NotFound();
+        var command = new DeleteTodoCommand(userId, id);
         var response = await commandMediator.HandleAsync(command, cancellationToken);
         return TypedResults.Ok(response.ToDto());
     }

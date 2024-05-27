@@ -33,14 +33,4 @@ public static class Mapper
         Title: dto.Title,
         Description: dto.Description,
         ExecutionDate: dto.ExecutionTime);
-
-    public static UpdateTodoCommand ToCommand(this UpdateTodoCommandDto dto, Guid userId) => new(
-        UserId: userId,
-        TodoId: dto.TodoId,
-        Title: dto.Title,
-        Description: dto.Description,
-        ExecutionDate: dto.ExecutionTime,
-        IsCompleted: dto.IsCompleted);
-
-    public static DeleteTodoCommand ToCommand(this DeleteTodoCommandDto dto, Guid userId) => new(userId, dto.TodoId);
 }

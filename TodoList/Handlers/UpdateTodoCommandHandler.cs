@@ -12,17 +12,18 @@ public sealed class UpdateTodoCommandHandler(
     public async ValueTask<UpdateTodoCommandResponse> HandleAsync(UpdateTodoCommand command,
         CancellationToken cancellationToken)
     {
+        var (userId, todoDto) = command;
         await using var db = await dbContextFactory.CreateDbContextAsync(cancellationToken);
         var todo = await db.Todos.FirstOrDefaultAsync(
-            x => x.UserId == command.UserId &&
-                 x.Id == command.TodoId &&
+            x => x.UserId == userId &&
+                 x.Id == todoDto.Id &&
                  !x.IsDeleted, cancellationToken);
         if (todo is null)
             return new UpdateTodoCommandResponse();
-        todo.ExecutionDate = command.ExecutionDate;
-        todo.IsCompleted = command.IsCompleted;
-        todo.Title = command.Title;
-        todo.Description = command.Description;
+        todo.ExecutionDate = todoDto.ExecutionDate;
+        todo.IsCompleted = todoDto.IsCompleted;
+        todo.Title = todoDto.Title;
+        todo.Description = todoDto.Description;
         await db.SaveChangesAsync(cancellationToken);
         return new UpdateTodoCommandResponse(todo.ToDto());
     }
