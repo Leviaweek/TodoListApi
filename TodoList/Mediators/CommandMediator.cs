@@ -8,7 +8,9 @@ namespace TodoList.Mediators;
 public sealed class CommandMediator(
     ICommandHandler<AddTodoCommand, AddTodoCommandResponse> addTodoCommandHandler,
     ICommandHandler<UpdateTodoCommand, UpdateTodoCommandResponse> updateTodoCommandHandler,
-    ICommandHandler<DeleteTodoCommand, DeleteTodoCommandResponse> deleteTodoCommandHandler) : ICommandMediator
+    ICommandHandler<DeleteTodoCommand, DeleteTodoCommandResponse> deleteTodoCommandHandler,
+    ICommandHandler<AddWebUserCommand, AddWebUserCommandResponse> addWebUserCommandHandler,
+    ICommandHandler<LoginWebUserCommand, LoginWebUserCommandResponse> loginWebUserCommandHandler) : ICommandMediator
 {
     public async ValueTask<TResponse> HandleAsync<TResponse>(ICommand<TResponse> command, CancellationToken cancellationToken)
         where TResponse: class, IResponse
@@ -28,6 +30,16 @@ public sealed class CommandMediator(
             case DeleteTodoCommand deleteTodoCommand:
             {
                 var response = await deleteTodoCommandHandler.HandleAsync(deleteTodoCommand, cancellationToken);
+                return Unsafe.As<TResponse>(response);
+            }
+            case AddWebUserCommand addWebUserCommand:
+            {
+                var response = await addWebUserCommandHandler.HandleAsync(addWebUserCommand, cancellationToken);
+                return Unsafe.As<TResponse>(response);
+            }
+            case LoginWebUserCommand loginWebUserCommand:
+            {
+                var response = await loginWebUserCommandHandler.HandleAsync(loginWebUserCommand, cancellationToken);
                 return Unsafe.As<TResponse>(response);
             }
             default:

@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using TodoList.Abstractions;
 using TodoList.Database;
-using TodoList.Models;
 using TodoList.Models.Commands;
 using TodoList.Models.Responses;
 

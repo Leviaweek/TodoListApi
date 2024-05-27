@@ -10,4 +10,6 @@ public class TodoDbContext(DbContextOptions<TodoDbContext> options): DbContext(o
     
     public required DbSet<User> Users { get; set; }
     public required DbSet<Todo> Todos { get; set; }
+    public required DbSet<WebUser> WebUsers { get; set; }
+    public required DbSet<TelegramUser> TelegramUsers { get; set; }
 }

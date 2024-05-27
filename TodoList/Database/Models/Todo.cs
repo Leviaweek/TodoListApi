@@ -19,7 +19,7 @@ public sealed record Todo
     public required DateTimeOffset ExecutionDate { get; set; }
     public required DateTimeOffset CreatedAt { get; set; }
     public required bool IsDeleted { get; set; }
-    public User User { get; set; } = null!;
+    public required User User { get; set; }
 }
 
 file sealed class TodoConfigure : IEntityTypeConfiguration<Todo>

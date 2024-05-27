@@ -1,4 +1,3 @@
-using System.Text.Json.Serialization;
 using TodoList.Abstractions;
 using TodoList.Models.Dtos;
 using TodoList.Models.Responses;
