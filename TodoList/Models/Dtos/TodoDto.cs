@@ -7,5 +7,7 @@ public sealed record TodoDto(
     [property: JsonPropertyName("title")]string Title,
     [property: JsonPropertyName("description")]string Description,
     [property: JsonPropertyName("isCompleted")]bool IsCompleted,
-    [property: JsonPropertyName("executionDate")]DateTimeOffset ExecutionDate,
-    [property: JsonPropertyName("createdAt")]DateTimeOffset CreatedAt);
+    [property: JsonPropertyName("deadline")]DateTimeOffset DeadLine,
+    [property: JsonPropertyName("createdAt")]DateTimeOffset CreatedAt,
+    [property:JsonPropertyName("completedAt")]
+    [property: JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)] DateTimeOffset? CompletedAt = null);

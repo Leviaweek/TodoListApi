@@ -16,8 +16,9 @@ public sealed record Todo
     public required string Title { get; set; }
     public required string Description { get; set; }
     public required bool IsCompleted { get; set; }
-    public required DateTimeOffset ExecutionDate { get; set; }
+    public required DateTimeOffset DeadLine { get; set; }
     public required DateTimeOffset CreatedAt { get; set; }
+    public DateTimeOffset? CompletedAt { get; set; }
     public required bool IsDeleted { get; set; }
     public required User User { get; set; }
 }

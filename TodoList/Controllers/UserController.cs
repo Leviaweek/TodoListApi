@@ -9,7 +9,7 @@ namespace TodoList.Controllers;
 
 [ApiController]
 [Route("/api/users")]
-public class UserController(ICommandMediator commandMediator)
+public class UserController(ICommandMediator commandMediator, ILogger<UserController> logger)
 {
     [HttpPost("web")]
     public async ValueTask<Results<Ok<AddWebUserCommandResponseDto>, NotFound>> AddWebUserAsync(
@@ -18,6 +18,7 @@ public class UserController(ICommandMediator commandMediator)
     {
         var command = dto.ToCommand();
         var response = await commandMediator.HandleAsync(command, cancellationToken);
+        logger.LogInformation("{}", response.ToString());
         return response.User is null ? TypedResults.NotFound() : TypedResults.Ok(response.ToDto());
     }
     [HttpPost("web/login")]
@@ -27,6 +28,7 @@ public class UserController(ICommandMediator commandMediator)
     {
         var command = dto.ToCommand();
         var response = await commandMediator.HandleAsync(command, cancellationToken);
+        logger.LogInformation("{}", response.ToString());
         return response.User is null ? TypedResults.NotFound() : TypedResults.Ok(response.ToDto());
     }
 }

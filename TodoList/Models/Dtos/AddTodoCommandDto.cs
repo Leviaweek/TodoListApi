@@ -6,4 +6,4 @@ namespace TodoList.Models.Dtos;
 public sealed record AddTodoCommandDto(
     [property: JsonPropertyName("title")]string Title,
     [property: JsonPropertyName("description")]string Description,
-    [property: JsonPropertyName("executionDate")]DateTimeOffset ExecutionTime);
+    [property: JsonPropertyName("executionDate")]DateTimeOffset DeadLine);

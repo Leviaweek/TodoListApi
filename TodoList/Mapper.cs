@@ -12,13 +12,8 @@ public static class Mapper
         Title: todo.Title,
         Description: todo.Description,
         IsCompleted: todo.IsCompleted,
-        ExecutionDate: todo.ExecutionDate,
+        DeadLine: todo.DeadLine,
         CreatedAt: todo.CreatedAt);
-
-    public static GetTodoQueryResponseDto ToDto(this GetTodoQueryResponse response) =>
-        new(response.Todo ?? throw new ArgumentNullException(nameof(response)));
-
-    public static GetAllTodoQueryResponseDto ToDto(this GetAllTodoQueryResponse response) => new(response.Todos);
 
     public static AddTodoCommandResponseDto ToDto(this AddTodoCommandResponse response) =>
         new(response.Todo ?? throw new ArgumentNullException(nameof(response)));
@@ -30,7 +25,7 @@ public static class Mapper
     public static AddTodoCommand ToCommand(this AddTodoCommandDto dto, Guid userId) => new(userId,
         Title: dto.Title,
         Description: dto.Description,
-        ExecutionDate: dto.ExecutionTime);
+        DeadLine: dto.DeadLine);
     public static AddWebUserCommand ToCommand(this AddWebUserCommandDto dto) => new(
         Login: dto.Login,
         Name: dto.Name,

@@ -20,7 +20,7 @@ public sealed class AddTodoCommandHandler(
         {
             Id = Guid.NewGuid(),
             CreatedAt = DateTimeOffset.UtcNow,
-            ExecutionDate = command.ExecutionDate,
+            DeadLine = command.DeadLine,
             IsCompleted = false,
             Description = command.Description,
             Title = command.Title,

@@ -20,8 +20,15 @@ public sealed class UpdateTodoCommandHandler(
                  !x.IsDeleted, cancellationToken);
         if (todo is null)
             return new UpdateTodoCommandResponse();
-        todo.ExecutionDate = todoDto.ExecutionDate;
+        todo.DeadLine = todoDto.DeadLine;
         todo.IsCompleted = todoDto.IsCompleted;
+        todo.CompletedAt = todo.IsCompleted switch
+        {
+            false when todoDto.IsCompleted => DateTimeOffset.UtcNow,
+            true when !todoDto.IsCompleted => null,
+            _ => todo.CompletedAt
+        };
+
         todo.Title = todoDto.Title;
         todo.Description = todoDto.Description;
         await db.SaveChangesAsync(cancellationToken);
